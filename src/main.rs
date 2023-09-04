@@ -14,7 +14,7 @@ fn main() {
             continue;
         }
 
-        match input.chars().next() {
+        match input.trim().chars().nth(0) {
             Some(c) => match c {
                 'q' => {
                     running = false;
