@@ -18,8 +18,23 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
     - name: Build
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+    - name: Build release artifacts
+      run: cargo build --release
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      if: matrix.os == windows-latest
+      with:
+        name: ed-rs-${{ matrix.os }}
+        path: target/release/ed-rs.exe
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      if: matrix.os != windows-latest
+      with:
+        name: ed-rs-${{ matrix.os }}
+        path: target/release/ed-rs
