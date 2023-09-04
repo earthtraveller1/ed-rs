@@ -7,8 +7,8 @@ fn main() {
     let stdin = std::io::stdin();
 
     let mut running = true;
-    let mut input = String::new();
     while running {
+        let mut input = String::new();
         if let Err(_) = stdin.read_line(&mut input) {
             println!("?");
             continue;
@@ -34,14 +34,15 @@ fn main() {
 }
 
 fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut u32) {
-    let mut input = String::new();
-
     let mut is_insert_mode = true;
     while is_insert_mode {
+        let mut input = String::new();
         if let Err(_) = p_stdin.read_line(&mut input) {
             println!("?");
             continue;
         }
+
+        let input = input.trim();
 
         if input == "." {
             is_insert_mode = false;
@@ -49,7 +50,7 @@ fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut u
         }
 
         if let Ok(current_line) = TryInto::<usize>::try_into(*p_current_line) {
-            p_lines.insert(current_line, input.clone());
+            p_lines.insert(current_line, input.to_string());
             *p_current_line += 1;
         } else {
             println!("?");
