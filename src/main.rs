@@ -1,5 +1,10 @@
 use std::io::Stdin;
 
+struct Range {
+    min: u32,
+    max: u32,
+}
+
 fn main() {
     let mut lines = vec!["".to_string()];
     let mut current_line = 0usize;
@@ -75,4 +80,26 @@ fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut u
 
         *p_current_line += 1;
     }
+}
+
+fn parse_range(p_range_str: &str, p_min: u32, p_max: u32) -> Option<Range> {
+    let components = p_range_str.split(',').collect::<Vec<&str>>();
+    if components.len() != 2 {
+        return None;
+    }
+
+    let min = unsafe { *components.as_ptr().add(0) };
+    let max = unsafe { *components.as_ptr().add(1) };
+
+    let min = match min.parse::<u32>() {
+        Err(_) => return None,
+        Ok(x) => x,
+    };
+
+    let max = match max.parse::<u32>() {
+        Err(_) => return None,
+        Ok(x) => x,
+    };
+
+    Some(Range { min, max })
 }
