@@ -31,6 +31,12 @@ fn main() {
                         println!("?");
                     }
                 }
+                'p' => {
+                    println!("{}", lines[current_line as usize]);
+                }
+                'n' => {
+                    println!("{}\t{}", current_line, lines[current_line as usize]);
+                }
                 _ => {
                     println!("?");
                 }
