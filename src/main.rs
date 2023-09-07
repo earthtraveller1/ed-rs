@@ -1,6 +1,6 @@
 use std::io::Stdin;
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Debug)]
 struct Range {
     min: u32,
     max: u32,
@@ -110,4 +110,23 @@ fn parse_range(p_range_str: &str, p_min: u32, p_max: u32) -> Option<Range> {
     };
 
     Some(Range { min, max })
+}
+
+#[test]
+fn range_parser_test() {
+    let want = Range { min: 4, max: 5 };
+    let got = parse_range("4,5", 0, 100).unwrap();
+    assert_eq!(want, got);
+
+    let want = Range { min: 5, max: 16 };
+    let got = parse_range(",16", 5, 100).unwrap();
+    assert_eq!(want, got);
+
+    let want = Range { min: 14, max: 33 };
+    let got = parse_range("14,", 0, 33).unwrap();
+    assert_eq!(want, got);
+
+    let want = Range { min: 9, max: 81 };
+    let got = parse_range(",", 9, 81).unwrap();
+    assert_eq!(want, got);
 }
