@@ -83,6 +83,13 @@ fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut u
 }
 
 fn parse_range(p_range_str: &str, p_min: u32, p_max: u32) -> Option<Range> {
+    if p_range_str == "," {
+        return Some(Range {
+            min: p_min,
+            max: p_max,
+        });
+    }
+
     let components = p_range_str.split(',').collect::<Vec<&str>>();
     if components.len() != 2 {
         return None;
@@ -92,12 +99,12 @@ fn parse_range(p_range_str: &str, p_min: u32, p_max: u32) -> Option<Range> {
     let max = unsafe { *components.as_ptr().add(1) };
 
     let min = match min.parse::<u32>() {
-        Err(_) => return None,
+        Err(_) => p_min,
         Ok(x) => x,
     };
 
     let max = match max.parse::<u32>() {
-        Err(_) => return None,
+        Err(_) => p_max,
         Ok(x) => x,
     };
 
