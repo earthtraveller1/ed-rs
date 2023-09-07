@@ -14,13 +14,22 @@ fn main() {
             continue;
         }
 
-        match input.trim().chars().nth(0) {
+        let command = input.trim();
+        match command.chars().nth(0) {
             Some(c) => match c {
                 'q' => {
-                    running = false;
+                    if command.len() == 1 {
+                        running = false;
+                    } else {
+                        println!("?");
+                    }
                 }
                 'i' => {
-                    input_mode(&stdin, &mut lines, &mut current_line);
+                    if command.len() == 1 {
+                        input_mode(&stdin, &mut lines, &mut current_line);
+                    } else {
+                        println!("?");
+                    }
                 }
                 _ => {
                     println!("?");
