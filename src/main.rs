@@ -1,7 +1,7 @@
 use std::io::Stdin;
 
 fn main() {
-    let mut lines = Vec::<String>::new();
+    let mut lines = vec!["".to_string()];
     let mut current_line = 0usize;
 
     let stdin = std::io::stdin();
@@ -64,7 +64,15 @@ fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut u
             continue;
         }
 
-        p_lines.insert(*p_current_line, input.to_string());
+        p_lines.insert(
+            if *p_current_line == 0 {
+                *p_current_line + 1
+            } else {
+                *p_current_line
+            },
+            input.to_string(),
+        );
+
         *p_current_line += 1;
     }
 }
