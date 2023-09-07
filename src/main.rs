@@ -1,5 +1,6 @@
 use std::io::Stdin;
 
+#[derive(PartialEq, Eq)]
 struct Range {
     min: u32,
     max: u32,
