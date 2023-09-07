@@ -2,7 +2,7 @@ use std::io::Stdin;
 
 fn main() {
     let mut lines = Vec::<String>::new();
-    let mut current_line = 0;
+    let mut current_line = 0usize;
 
     let stdin = std::io::stdin();
 
@@ -32,10 +32,10 @@ fn main() {
                     }
                 }
                 'p' => {
-                    println!("{}", lines[current_line as usize]);
+                    println!("{}", lines[current_line]);
                 }
                 'n' => {
-                    println!("{}\t{}", current_line, lines[current_line as usize]);
+                    println!("{}\t{}", current_line, lines[current_line]);
                 }
                 _ => {
                     println!("?");
@@ -48,7 +48,7 @@ fn main() {
     }
 }
 
-fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut u32) {
+fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut usize) {
     let mut is_insert_mode = true;
     while is_insert_mode {
         let mut input = String::new();
@@ -64,12 +64,7 @@ fn input_mode(p_stdin: &Stdin, p_lines: &mut Vec<String>, p_current_line: &mut u
             continue;
         }
 
-        if let Ok(current_line) = TryInto::<usize>::try_into(*p_current_line) {
-            p_lines.insert(current_line, input.to_string());
-            *p_current_line += 1;
-        } else {
-            println!("?");
-            continue;
-        }
+        p_lines.insert(*p_current_line, input.to_string());
+        *p_current_line += 1;
     }
 }
